@@ -10,9 +10,42 @@
 
 using App;
 
-List<IUser> user = new list<IUser>();
+
+List<IUser> users = new List<IUser>();
 users.Add(new User("Kifle", "123"));
+users.Add(new User("Shahrooz", "123"));
+users.Add(new User("Nedem", "123"));
+users.Add(new User("Rami", "123"));
+users.Add(new User("Simon", "123"));
 
 
 IUser? active_user = null; // Skapar en variabel som kan innehålla en användare även om det saknas nu. 
+
+bool running = true; // Vill att programmet ska fråga om lösenord tills användaren skriver rätt.
+while (running) // uppreppa koden till running blir falskt. 
+{
+  if (active_user == null) // Kollar om någon är inloggad annars måste de logga in och då ber koden undertill de att logga in.
+    Console.Clear(); // Rensar allt. 
+
+    Console.WriteLine("username");
+    string username = Console.ReadLine();
+
+    Console.Clear();
+
+    Console.WriteLine("password");
+    string password = Console.ReadLine();
+    
+    Console.Clear(); 
+
+
+
+
+
+
+
+
+
+  }
+
+
 
