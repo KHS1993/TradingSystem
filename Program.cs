@@ -27,25 +27,68 @@ while (running) // uppreppa koden till running blir falskt.
   if (active_user == null) // Kollar om någon är inloggad annars måste de logga in och då ber koden undertill de att logga in.
     Console.Clear(); // Rensar allt. 
 
-    Console.WriteLine("username");
-    string username = Console.ReadLine();
+  Console.WriteLine("username");
+  string username = Console.ReadLine();
 
-    Console.Clear();
+  Console.Clear();
 
-    Console.WriteLine("password");
-    string password = Console.ReadLine();
-    
-    Console.Clear(); 
+  Console.WriteLine("password");
+  string password = Console.ReadLine();
 
+  Console.Clear();
 
-
-
-
-
-
-
-
+  foreach (IUser user in users) // Går igenom alla användare som jag har skrivit in däruppe. 
+  {
+    if (user.TryLogin(username, password)) // Kollar varje användares username och password passar. Returnerar sen true eller false om inloggningen är korrekt.
+    {
+      active_user = user; // Om ovanstående stämmer så blir användaren inloggad. Aktiv användare.
+      break;
+    }
   }
+}
+else
+{
+
+  Console.Clear();
+  Console.WriteLine(" --- Trading System --- ");
+
+  switch (active_user.GetRole())
+{
+
+
+  case Role.User:
+      break;
+
+    case Role.Guest:
+      break;
+
+  bool UserRunning = true;
+      while (UserRunning)
+
+      {
+        Console.WriteLine("Welcome Trader");
+        Console.WriteLine("----------------");
+        Console.WriteLine("1. Show my Trades");
+        Console.WriteLine("2. Show my Items");
+        Console.WriteLine("3. Logout");
+
+      }
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
