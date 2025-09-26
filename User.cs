@@ -13,7 +13,7 @@ interface IUser // Alla som vill vara användare måste kunna logga in, ha en ro
   public string NewUser(); // ska ge tillbaka text och alla i programmet (public) kan ta del av de.
 }
 
-enum Role // iställer för att skriva 0,1,2 så skapas en list med namngivna värden - de oliak rollerna under.
+enum Role // iställer för att skriva 0,1,2 så skapas en list med namngivna värden - de olika rollerna under.
 {
   None,
   User,
