@@ -52,29 +52,65 @@ else
   Console.Clear();
   Console.WriteLine(" --- Trading System --- ");
 
-  switch (active_user.GetRole())
-{
+  if (active_user.IsRole(Role.User))
+  {
+    Console.WriteLine("Welcome user");
+
+  }
 
 
-  case Role.User:
+  switch (active_user.GetRole()) // Kollar användarens roll och gör olika saker beroende på svaret
+  {
+
+
+    case Role.User:
       break;
 
     case Role.Guest:
       break;
+    default: break;
+  }
 
-  bool UserRunning = true;
-      while (UserRunning)
 
-      {
-        Console.WriteLine("Welcome Trader");
-        Console.WriteLine("----------------");
-        Console.WriteLine("1. Show my Trades");
-        Console.WriteLine("2. Show my Items");
-        Console.WriteLine("3. Logout");
+  bool UserRunning = true; // skriver ut menyn i en oändlig loop tills någon loggar ut
+  while (UserRunning)
 
-      }
+  {
+    Console.WriteLine("Welcome Trader");
+    Console.WriteLine("----------------");
+    Console.WriteLine("1. Show my Trades");
+    Console.WriteLine("2. Show my Items");
+    Console.WriteLine("3. Logout");
+    string InputUser = Console.ReadLine();
 
-      
+  }
+  Console.WriteLine("logout");
+  string input = Console.ReadLine();
+  switch (input)
+  {
+    case "logout":
+      active_user = null;
+      break;
+  }
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
