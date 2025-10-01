@@ -18,7 +18,7 @@ namespace MyTradingApp
       items.Add(new Item() { name = "sofa", price = 1000 }); // skapar en ny item med namn och pris
       items.Add(new Item() { name = "chair", price = 200 });
       items.Add(new Item() { name = "lamp", price = 400 });
-      items.Add(new Item() { name = "clock", price = 700 });
+      items.Add(new Item() { name = "clock", price = 750 });
       items.Add(new Item() { name = "table", price = 1200 });
 
       foreach (var item in items) // Ska skriva ut allt ovanför 
