@@ -8,15 +8,22 @@
 // glöm ej assert
 
 
-using App;
+using System;
+using System.Collections.Generic;
+using MyTradingApp;
 
 
 List<IUser> users = new List<IUser>();
-users.Add(new User("Kifle", "123"));
-users.Add(new User("Shahrooz", "123"));
-users.Add(new User("Nedem", "123"));
-users.Add(new User("Rami", "123"));
-users.Add(new User("Simon", "123"));
+
+users.Add(new Trader("Kifle", "123"));
+users.Add(new Trader("Shahrooz", "123"));
+users.Add(new Trader("Nedem", "123"));
+users.Add(new Trader("Rami", "123"));
+users.Add(new Trader("Simon", "123"));
+
+
+
+
 
 
 IUser? active_user = null; // Skapar en variabel som kan innehålla en användare även om det saknas nu. 
@@ -24,8 +31,8 @@ IUser? active_user = null; // Skapar en variabel som kan innehålla en användar
 bool running = true; // Vill att programmet ska fråga om lösenord tills användaren skriver rätt.
 while (running) // uppreppa koden till running blir falskt. 
 {
-  if (active_user == null) // Kollar om någon är inloggad annars måste de logga in och då ber koden undertill de att logga in.
-    Console.Clear(); // Rensar allt. 
+  // Kollar om någon är inloggad annars måste de logga in och då ber koden undertill de att logga in.
+  Console.Clear(); // Rensar allt. 
 
   Console.WriteLine("username");
   string username = Console.ReadLine();
@@ -42,11 +49,12 @@ while (running) // uppreppa koden till running blir falskt.
     if (user.TryLogin(username, password)) // Kollar varje användares username och password passar. Returnerar sen true eller false om inloggningen är korrekt.
     {
       active_user = user; // Om ovanstående stämmer så blir användaren inloggad. Aktiv användare.
+      running = false; // Loopen ska stoppas när användare logga in korrekt.
       break;
     }
   }
 }
-else
+
 {
 
   Console.Clear();
@@ -97,7 +105,7 @@ else
 }
 
 
-}
+
 
 
 
