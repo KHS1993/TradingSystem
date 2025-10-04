@@ -9,35 +9,35 @@ namespace MyTradingApp
     public int price;
 
     public string description;
-  
-   public item(string name, int price, string description) // ska skapa nytt item när dessa tre värden skrivs in.
+
+    public item(string name, int price, string description) // ska skapa nytt item när dessa tre värden skrivs in.
     {
-      Name = name;
-      price = price;
-      description = description;
+      Name = itemName;
+      price = itemPrice;
+      description = itemDescription;
 
     }
   }
- 
+
   class Program // klassmetoden innehåller startmetoden Main, C# letar efter Main metoden för att köra programmet och det måste alltid ligga i en klass. 
-{
-  static void Main() // Metoden ska inte returnera ett värde utan bara kör det som är under
   {
-    List<Item> items = new List<Item>(); // Vill skapa en lista med items och värde 
-
-    items.Add(new Item() { name = "sofa", price = 1000 }); // skapar en ny item med namn och pris
-    items.Add(new Item() { name = "chair", price = 200 });
-    items.Add(new Item() { name = "lamp", price = 400 });
-    items.Add(new Item() { name = "clock", price = 750 });
-    items.Add(new Item() { name = "table", price = 1200 });
-
-    foreach (var item in items) // Ska skriva ut allt ovanför 
+    static void Main() // Metoden ska inte returnera ett värde utan bara kör det som är under
     {
-      Console.WriteLine("Name: " + item.name + ", Price: " + item.price); // skriver ut pris och namn på varan
+      List<Item> items = new List<Item>(); // Vill skapa en lista med items och värde 
+
+      items.Add(new Item() { name = "sofa", price = 1000 }); // skapar en ny item med namn och pris
+      items.Add(new Item() { name = "chair", price = 200 });
+      items.Add(new Item() { name = "lamp", price = 400 });
+      items.Add(new Item() { name = "clock", price = 750 });
+      items.Add(new Item() { name = "table", price = 1200 });
+
+      foreach (var item in items) // Ska skriva ut allt ovanför 
+      {
+        Console.WriteLine("Name: " + item.name + ", Price: " + item.price); // skriver ut pris och namn på varan
+      }
+
     }
 
   }
-
-}
 
 }
