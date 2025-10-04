@@ -22,6 +22,7 @@ namespace MyTradingApp
 
   }
 
+
   public class Trader : IUser // Samma sak här vill att Trader klassen ska följa dessa "instruktioner" i program.cs
   {
     public string Email;
@@ -59,6 +60,24 @@ namespace MyTradingApp
     {
 
       return GetRole() == role; // Kollar om användare har en roll.
+    }
+  
+
+    class User
+    {
+      List<Item> items = new List<Item>();
+
+      public void UploadItem(string name, int price, string description)
+      {
+
+        Item newItem = new Item(name, price, description);
+        items.Add(newItem);
+
+        Console.WriteLine("Item uploaded: " + name);
+
+
+      }
+
     }
 
   }
