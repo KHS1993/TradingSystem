@@ -55,29 +55,7 @@ while (running) // uppreppa koden till running blir falskt.
   }
 }
 
-{
-
-  Console.Clear();
-  Console.WriteLine(" --- Trading System --- ");
-
-  if (active_user.IsRole(Role.User))
-  {
-    Console.WriteLine("Welcome user");
-
-  }
-
-
-  switch (active_user.GetRole()) // Kollar användarens roll och gör olika saker beroende på svaret
-  {
-
-
-    case Role.User:
-      break;
-
-    case Role.Guest:
-      break;
-    default: break;
-  }
+// --- Meny ---
 
 
   bool UserRunning = true; // skriver ut menyn i en oändlig loop tills någon loggar ut
@@ -86,53 +64,64 @@ while (running) // uppreppa koden till running blir falskt.
   {
     Console.WriteLine("Welcome Trader");
     Console.WriteLine("----------------");
-    Console.WriteLine("1. Show my Trades");
-    Console.WriteLine("2. Show my Items");
-    Console.WriteLine("3. Logout");
-    string InputUser = Console.ReadLine();
+    Console.WriteLine("1. Login");
+    Console.WriteLine("2. Register");
+    Console.WriteLine("3. Show my Trades");
+    Console.WriteLine("4. Show my Items");
+    Console.WriteLine("5. Logout");
+
+    string Input = Console.ReadLine();
+
+    switch (Input)
+    {
+
+      case "1": // LOGGA IN
+        Console.WriteLine("Enter username");
+        string username = Console.ReadLine();
+
+
+        Console.WriteLine("Enter password");
+        string password = Console.ReadLine();
+        break;
+
+      case "2": // REGISTRERA KONTO
+        Console.WriteLine("Choose username");
+        string newUsername = Console.ReadLine();
+        break;
+
+
+        bool exists = false; // Talar om att användarnamnet redan existerar.
+        foreach (IUser user in users) // Går igenom redan registrerade användare 
+
+        {
+          if (User.Username == newUsername)
+          {
+
+            exists = true;
+            Console.WriteLine("User already exists");
+            break;
+
+          }
+        }
+        if (!exists) // Kör koden när när användare inte existerar
+        {
+          users.Add(new user(newUsername, newPassword));
+          Console.WriteLine("Username added");
+        }
+        break;
+
+      case "3":
+
+      case "4":
+
+      case "5":
+        active_user = null;
+        UserRunning = false;
+        break;
+
+    }
+
+    Console.WriteLine("Press Enter to continue");
+    Console.ReadLine();
 
   }
-  Console.WriteLine("logout");
-  string input = Console.ReadLine();
-  switch (input)
-  {
-    case "logout":
-      active_user = null;
-      break;
-  }
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
