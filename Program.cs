@@ -58,70 +58,78 @@ while (running) // uppreppa koden till running blir falskt.
 // --- Meny ---
 
 
-  bool UserRunning = true; // skriver ut menyn i en oändlig loop tills någon loggar ut
-  while (UserRunning)
+bool UserRunning = true; // skriver ut menyn i en oändlig loop tills någon loggar ut
+while (UserRunning)
 
+{
+  Console.Clear();
+  Console.WriteLine("Welcome Trader");
+  Console.WriteLine("----------------");
+  Console.WriteLine("1. Login");
+  Console.WriteLine("2. Register");
+  Console.WriteLine("3. Show my Trades");
+  Console.WriteLine("4. Show my Items");
+  Console.WriteLine("5. Logout");
+
+  string Input = Console.ReadLine();
+
+  switch (Input)
   {
-    Console.WriteLine("Welcome Trader");
-    Console.WriteLine("----------------");
-    Console.WriteLine("1. Login");
-    Console.WriteLine("2. Register");
-    Console.WriteLine("3. Show my Trades");
-    Console.WriteLine("4. Show my Items");
-    Console.WriteLine("5. Logout");
 
-    string Input = Console.ReadLine();
-
-    switch (Input)
-    {
-
-      case "1": // LOGGA IN
-        Console.WriteLine("Enter username");
-        string username = Console.ReadLine();
+    case "1": // LOGGA IN
+      Console.WriteLine("Enter username");
+      string username = Console.ReadLine();
 
 
-        Console.WriteLine("Enter password");
-        string password = Console.ReadLine();
-        break;
+      Console.WriteLine("Enter password");
+      string password = Console.ReadLine();
+      break;
+      
+    case "2": // REGISTRERA KONTO
+      Console.WriteLine("Choose username");
+      string newUsername = Console.ReadLine();
+      break;
 
-      case "2": // REGISTRERA KONTO
-        Console.WriteLine("Choose username");
-        string newUsername = Console.ReadLine();
-        break;
 
+      bool exists = false; // Talar om att användarnamnet redan existerar.
+      foreach (IUser user in users) // Går igenom redan registrerade användare 
 
-        bool exists = false; // Talar om att användarnamnet redan existerar.
-        foreach (IUser user in users) // Går igenom redan registrerade användare 
-
+      {
+        if (user.Username == newUsername)
         {
-          if (User.Username == newUsername)
-          {
 
-            exists = true;
-            Console.WriteLine("User already exists");
-            break;
+          exists = true;
+          Console.WriteLine("User already exists");
+          break;
 
-          }
         }
-        if (!exists) // Kör koden när när användare inte existerar
-        {
-          users.Add(new user(newUsername, newPassword));
-          Console.WriteLine("Username added");
-        }
-        break;
+      }
+      if (!exists) // Kör koden när när användare inte existerar
+      {
+        Console.WriteLine("Enter a password"); // Frågar användaren om lösenord och sparar det. Lägger till för att jag la till kod i Trader filen.
+        string NewPassword = Console.ReadLine();
+  
+        users.Add(new Trader(newUsername, newPassword)); //  Ny användare skapas efter input av namn och lösenord från användaren. add-funktionen sparar användaren i listan av användare. 
+        Console.WriteLine("Username added");
+      }
+      break;
 
-      case "3":
+    case "3":
 
-      case "4":
+    case "4":
 
-      case "5":
-        active_user = null;
-        UserRunning = false;
-        break;
+    case "5":
+      active_user = null; // användaren loggas ut
+      UserRunning = false; // Stoppar menyns loop. Programmet slutar visa menyn
+      break;
 
-    }
-
-    Console.WriteLine("Press Enter to continue");
-    Console.ReadLine();
+    default:
+      Console.WriteLine("Invalid input"); // Skriver ut detta om användaren skriver något som ej matcher case i switch satsen.
+      break;
 
   }
+
+  Console.WriteLine("Press Enter to continue"); // Användaren ska kunna se meddelandet innan nästa meny visas.
+  Console.ReadLine();
+
+}
