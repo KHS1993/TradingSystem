@@ -35,14 +35,14 @@ namespace MyTradingApp
 
     public Trader(string email, string password) // Kollar om inmatning av email och lösenrod från användaren stämmer överens 
     {
-      Email = email;
-      _password = password;
+      Email = email; // Sätter användarens email ( lagrar det i objekt )
+      _password = password; // sparar lösenord i objekt. (Glöm ej understreck i början är för att markera det är en privat variabel)
     }
 
-    public bool TryLogin(string username, string password)
+    public bool TryLogin(string username, string password) // Ska testa om användarens input av användarnamn och lösenord stämmer.
     {
 
-      return username == Email && password == _password;
+      return username == Email && password == _password; // Användarens input ska stämma överens med det som finns sparat. 
     }
 
     public Role GetRole()
@@ -63,17 +63,17 @@ namespace MyTradingApp
     }
   
 
-    class User
+    class User // Skapade en klass för användare.
     {
-      List<Item> items = new List<Item>();
-
-      public void UploadItem(string name, int price, string description)
+      List<Item> items = new List<Item>(); // Lägger den i klassen och inte i metoden då jag inte vill att den ska skapas varje gång metoden körs.
+       // Sparas så länge användaren finns kvar.
+      public void UploadItem(string name, int price, string description) // användaren ska kunna ladda upp en vara
       {
 
-        Item newItem = new Item(name, price, description);
-        items.Add(newItem);
+        Item newItem = new Item(name, price, description); // Skapar ett nytt objek med item utifrån användarens input.
+        items.Add(newItem); // Lägger till item i användarens lista(items). Sparar varan och användaren ska kunna ladda upp fler.
 
-        Console.WriteLine("Item uploaded: " + name);
+        Console.WriteLine("Item uploaded: " + name); // Meddelar användaren att varan är uppladad.
 
 
       }
