@@ -1,26 +1,77 @@
 // email and password
-
+using System;
+using System.Collections.Generic;
 
 namespace MyTradingApp
 {
-  public interface IUser // Alla som vill vara användare måste kunna logga in, ha en roll och kunna skapa en ny användare. Kopplat till Program.cs 
+  // En vara som användare kan ladda upp
+  public class Item
+
   {
-    bool TryLogin(string username, string password); // Tar användare och lösenord och kollar om det är sant eller falskt gällande inloggningen
-    Role GetRole();
-    string NewUser();
-    bool IsRole(Role role);
-    string Email { get; }
+    public string Name { get; set; }
+    public int Price { get; set; }
+    public string Description { get; set; }
+
+    public Item(string name, int price, strinf description)
+    {
+
+      Name = name;
+      Price = price;
+      Description = description;
+
+    }
   }
 
-
-  public enum Role // iställer för att skriva 0,1,2 så skapas en list med namngivna värden - de olika rollerna under.
+  // Interface för samtliga användare 
+  public interface IUser
   {
-    None,
-    User,
-    Guest,
+    bool TryLogin(string email, string password);
+    string Email { get; }
+    void UploadItem(Item item); // Ska inte returnera något när anvädaren alddar upp.
+    List<Item> GetItems();
+
+  }
+
+  //Trader är användaren som ska kunna ladda upp varor
+  public class Trader : IUser
+  {
+
+    public string Email { get; private set; }
+    private string _password;
+    private List<Item> _items;
+
+    public Trader(string email, string password)
+
+    {
+      Email = email;
+      _password = password;
+      _items = new List<Item>();
+
+    }
+
+    // Kontrollera inloggning
+    public bool TryLogin(string email, string password)
+    {
+      return Email == email && _password == password;
+
+    }
+
+    // Ladda upp vara
+    public void UploadItem(Item item)
+
+    {
+
+      _items.Add(item);
+    }
 
 
+    // Hämta alla varor 
+    public List<Item> GetItems()
+    {
+      return _items;
+
+
+    }
   }
 }
-
 
