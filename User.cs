@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MyTradingApp
 {
   // Interface för alla användare
-  public interface IUser
+  public interface IUser // Ska definera vad användarklasser måste kunna göra, logga in , lagra e-post ,ladde upp varor och hämta de.
   {
     bool TryLogin(string email, string password);
     string Email { get; }
@@ -12,7 +12,7 @@ namespace MyTradingApp
     List<Item> GetItems();
   }
 
-  // Trader är en användare som kan ladda upp varor
+  // Representerar en användare som ska hantera varor.
   public class Trader : IUser
   {
     public string Email { get; private set; }
@@ -31,14 +31,16 @@ namespace MyTradingApp
       return Email == email && _password == password;
     }
 
-    public void UploadItem(Item item)
+    public void UploadItem(Item item) // Lägger till item i användarens lista.
     {
       _items.Add(item);
     }
 
-    public List<Item> GetItems()
+    public List<Item> GetItems() // returnerar de varor som användaren har laddat upp
     {
       return _items;
     }
   }
 }
+
+// Klassen ska hantera användarinloggning och varuhantering för Trader-användaren.

@@ -16,15 +16,15 @@ class Program
 {
   static void Main()
   {
-    List<IUser> users = new List<IUser>();
-    IUser? activeUser = null;
-    bool running = true;
+    List<IUser> users = new List<IUser>(); // Alla registrerade användare
+    IUser? activeUser = null; // sparar användare som är inloggade för tillfället.
+    bool running = true; // Programmet kör tills användaren väljer att avsluta.
 
-    while (running)
+    while (running) // Huvudloop
     {
       Console.Clear();
 
-      if (activeUser == null)
+      if (activeUser == null) // Om ingen är inloggad skriver ut menyn: Register, Login, Exit. Om användaren är inloggad skriver ut menyn: Upload Item, Show My Items, Show All Items, Logout.
       {
         Console.WriteLine("--- Welcome ---");
         Console.WriteLine("1. Register");
