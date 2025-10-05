@@ -12,126 +12,171 @@ using System;
 using System.Collections.Generic;
 using MyTradingApp;
 
-namespace MyTradingApp
+class Program
 
 {
-
-  class Program
+  static void Main()
   {
 
-    static void Main()
+    List<IUser> users = new List<IUser>();
+    IUser? activeUser = null;
+    bool running = true;
 
+    while (running)
     {
+      Console.Clear();
 
-      List<IUser> users = new List<IUser>();
 
+      if (activeUser == null)
       {
-
-        new Trader("Kifle", "123");
-        new Trader("Shahrooz", "123");
-        new Trader("Nedem", "123");
-        new Trader("Rami", "123");
-        new Trader("Simon", "123");
-
-      }
-      ;
-
-      IUser? active_user = null; // Skapar en variabel som kan innehålla en användare även om det saknas nu. 
-      bool running = true; // Vill att programmet ska fråga om lösenord tills användaren skriver rätt.
-
-
-      while (running) // uppreppa koden till running blir falskt. 
-      {
-        // Kollar om någon är inloggad annars måste de logga in och då ber koden undertill de att logga in.
-        Console.Clear(); // Rensar allt. 
-        Console.WriteLine("username");
-        string username = Console.ReadLine();
-
-
-        Console.WriteLine("password");
-        string password = Console.ReadLine();
-
-
-
-        foreach (IUser user in users) // Går igenom alla användare som jag har skrivit in däruppe. 
-        {
-          if (user.TryLogin(username, password)) // Kollar varje användares username och password passar. Returnerar sen true eller false om inloggningen är korrekt.
-          {
-            active_user = user; // Om ovanstående stämmer så blir användaren inloggad. Aktiv användare.
-            running = false; // Loopen ska stoppas när användare logga in korrekt.
-            break;
-          }
-        }
-      }
-
-      // --- Meny ---
-
-
-      bool UserRunning = true; // skriver ut menyn i en oändlig loop tills någon loggar ut
-      while (UserRunning)
-
-      {
-        Console.Clear();
-        Console.WriteLine("Welcome Trader");
-        Console.WriteLine("----------------");
+        Console.WriteLine("--- Welcome ---");
         Console.WriteLine("1. Register");
-        Console.WriteLine("2. Logout");
+        Console.WriteLine("2. Login");
+        Console.WriteLine("3. Exit");
+        Console.Write("Choose an option");
+        string choice = Console.ReadLine() ?? "";
 
-        string Input = Console.ReadLine();
-
-        switch (Input)
+        switch (choice)
         {
+          case "1": //Registrera
+            Console.Write("Enter email");
+            string email = Console.ReadLine() ?? "";
+            Console.Write("Enter password");
+            string password = Console.ReadLine() ?? "";
 
-          case "1": // LOGGA IN
-            Console.WriteLine("Choose username");
-            string newUsername = Console.ReadLine();
-
-
-            Console.WriteLine("Choose password");
-            string newPassword = Console.ReadLine();
-
-
-
-
-            bool exists = false; // Talar om att användarnamnet redan existerar.
-            foreach (IUser user in users) // Går igenom redan registrerade användare 
+            bool exists = users.Exists(u => u.Email == email);
+            if (exists)
 
             {
-              if (user.Email == newUsername) // Fix: Use correct property for checking existing usernames
-              {
 
-                exists = true;
-                Console.WriteLine("User already exists");
+              Console.WriteLine("User already exists!");
+
+            }
+            else
+            {
+              users.Add(new Trader(email, password));
+              Console.WriteLine("User registered successfully");
+
+            }
+
+            Console.WriteLine("Press Enter to continue");
+            Console.ReadLine();
+            break;
+
+
+          case "2":
+            Console.Write("Email: ");
+            string loginEmail = Console.ReadLine() ?? "";
+            Console.Write("Password: ");
+            string loginPassword = Console.ReadLine() ?? "";
+
+            activeUser = null;
+
+            foreach (User u in users)
+
+            {
+
+              if (u.TryLogin(loginEmail, loginPassword))
+              {
+                activeUser = u;
                 break;
 
               }
             }
-            if (!exists) // Kör koden när när användare inte existerar
+            if (activeUser != null)
             {
-              users.Add(new Trader(newUsername, newPassword)); //  Ny användare skapas efter input av namn och lösenord från användaren. add-funktionen sparar användaren i listan av användare. 
-              Console.WriteLine("User registered successfully");
+              Console.WriteLine("Login successful");
+
             }
+            else
+            {
+              Console.WriteLine("Invalid email or password!");
+            }
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
             break;
 
-          case "2":
-            active_user = null;
-            UserRunning = false;
+          case "3":
+            running = false;
             break;
 
 
           default:
-            Console.WriteLine("Invalid option"); // Skriver ut detta om användaren skriver något som ej matcher case i switch satsen.
+            Console.WriteLine("Invalid input, press Enter to continue");
+            Console.ReadLine();
+            break;
+        }
+      }
+      else // Användare inloggad
+      {
+
+        Console.Clear();
+        Console.WriteLine("--- Welcome ---");
+        Console.WriteLine("1. Upload Item");
+        Console.WriteLine("2. Show My Items");
+        Console.WriteLine("3. Show All Items");
+        Console.WriteLine("4. Logout");
+        Console.Write("Choose an option: ");
+        string choice = Console.ReadLine() ?? "";
+
+        switch (choice)
+        {
+
+          case "1": // Ladda upp vara
+            Console.Write("Item name: ");
+            string name = Console.ReadLine() ?? "";
+            Console.Write("Price: ");
+            string priceInput = Console.ReadLine() ?? "0";
+            int price = int.TryParse(priceInput, out int p) ? p : 0;
+            Console.Write("Description: ");
+            string desc = Console.ReadLine() ?? "";
+
+            activeUser.UploadItem(new Item(name, price, desc));
+            Console.WriteLine("Item uploaded!");
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
             break;
 
+          case "2":
+            Console.WriteLine("--- My Items ---");
+            foreach (Item item in activeUser.GetItems())
+            {
+              Console.WriteLine($"{item.Name} - {item.Price} - {item.Description}");
+            }
+            Console.WriteLine("Press Enter to continue");
+            Console.ReadLine();
+            break;
+
+          case "3": // Visa alla varor
+            Console.WriteLine("-- All Users Items ---");
+            foreach (User user in users)
+            {
+              if (user != activeUser)
+              {
+                foreach (Item item in user.GetItems())
+                {
+                  Console.WriteLine($"{item.Name} - {item.Price} - {item.Description} (Owner: {user.Email})");
+                }
+              }
+            }
+
+            Console.WriteLine("Press Enter to continue...");
+            Console.ReadLine();
+            break;
+
+          case "4":
+            activeUser = null;
+            break;
+
+          default:
+            Console.WriteLine("Invalid input, press Enter to continue");
+            Console.ReadLine();
+            break;
         }
-
-        Console.WriteLine("Press Enter to continue"); // Användaren ska kunna se meddelandet innan nästa meny visas.
-        Console.ReadLine();
-
       }
-
     }
-
   }
-
 }
+
+
+
