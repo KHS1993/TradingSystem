@@ -13,11 +13,9 @@ using System.Collections.Generic;
 using MyTradingApp;
 
 class Program
-
 {
   static void Main()
   {
-
     List<IUser> users = new List<IUser>();
     IUser? activeUser = null;
     bool running = true;
@@ -26,43 +24,36 @@ class Program
     {
       Console.Clear();
 
-
       if (activeUser == null)
       {
         Console.WriteLine("--- Welcome ---");
         Console.WriteLine("1. Register");
         Console.WriteLine("2. Login");
         Console.WriteLine("3. Exit");
-        Console.Write("Choose an option");
+        Console.Write("Choose an option: ");
         string choice = Console.ReadLine() ?? "";
 
         switch (choice)
         {
-          case "1": //Registrera
-            Console.Write("Enter email");
+          case "1":
+            Console.Write("Enter email: ");
             string email = Console.ReadLine() ?? "";
-            Console.Write("Enter password");
+            Console.Write("Enter password: ");
             string password = Console.ReadLine() ?? "";
 
-            bool exists = users.Exists(u => u.Email == email);
-            if (exists)
-
+            if (users.Exists(u => u.Email == email))
             {
-
               Console.WriteLine("User already exists!");
-
             }
             else
             {
               users.Add(new Trader(email, password));
               Console.WriteLine("User registered successfully");
-
             }
 
             Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
             break;
-
 
           case "2":
             Console.Write("Email: ");
@@ -71,28 +62,25 @@ class Program
             string loginPassword = Console.ReadLine() ?? "";
 
             activeUser = null;
-
-            foreach (User u in users)
-
+            foreach (IUser u in users)
             {
-
               if (u.TryLogin(loginEmail, loginPassword))
               {
                 activeUser = u;
                 break;
-
               }
             }
+
             if (activeUser != null)
             {
               Console.WriteLine("Login successful");
-
             }
             else
             {
               Console.WriteLine("Invalid email or password!");
             }
-            Console.WriteLine("Press enter to continue");
+
+            Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
             break;
 
@@ -100,16 +88,14 @@ class Program
             running = false;
             break;
 
-
           default:
             Console.WriteLine("Invalid input, press Enter to continue");
             Console.ReadLine();
             break;
         }
       }
-      else // Användare inloggad
+      else
       {
-
         Console.Clear();
         Console.WriteLine("--- Welcome ---");
         Console.WriteLine("1. Upload Item");
@@ -121,8 +107,7 @@ class Program
 
         switch (choice)
         {
-
-          case "1": // Ladda upp vara
+          case "1":
             Console.Write("Item name: ");
             string name = Console.ReadLine() ?? "";
             Console.Write("Price: ");
@@ -133,7 +118,7 @@ class Program
 
             activeUser.UploadItem(new Item(name, price, desc));
             Console.WriteLine("Item uploaded!");
-            Console.WriteLine("Press enter to continue");
+            Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
             break;
 
@@ -147,9 +132,9 @@ class Program
             Console.ReadLine();
             break;
 
-          case "3": // Visa alla varor
-            Console.WriteLine("-- All Users Items ---");
-            foreach (User user in users)
+          case "3":
+            Console.WriteLine("--- All Users Items ---");
+            foreach (IUser user in users)
             {
               if (user != activeUser)
               {
@@ -159,8 +144,7 @@ class Program
                 }
               }
             }
-
-            Console.WriteLine("Press Enter to continue...");
+            Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
             break;
 
@@ -177,6 +161,3 @@ class Program
     }
   }
 }
-
-
-
