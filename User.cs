@@ -1,5 +1,5 @@
 // email and password
-using System;
+
 using System.Collections.Generic;
 
 namespace MyTradingApp
@@ -12,7 +12,7 @@ namespace MyTradingApp
     public int Price { get; set; }
     public string Description { get; set; }
 
-    public Item(string name, int price, strinf description)
+    public Item(string name, int price, string description)
     {
 
       Name = name;
